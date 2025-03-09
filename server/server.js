@@ -5,6 +5,8 @@ require("dotenv").config()
 const connectDB = require("./config/db")
 const PORT = process.env.PORT || 5000
 const authRoutes = require('./routes/auth');
+const cartRoutes = require('./routes/cart');
+const wishlistRoutes = require('./routes/wishlist');
 const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
 
 // middlewares
@@ -20,6 +22,8 @@ connectDB()
 app.use('/api/items', require("./routes/items"))
 app.use('/api/payment', cors(), require("./routes/payment"))
 app.use('/api/auth', authRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/wishlist', wishlistRoutes);
 
 // Error middleware
 app.use(notFound);

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import './RegisterCard.css';
 
 const RegisterCard = () => {
@@ -9,7 +10,6 @@ const RegisterCard = () => {
         email: '',
         password: ''
     });
-    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -21,22 +21,29 @@ const RegisterCard = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        
+
         // Basic validation
         if (!firstName || !lastName || !email || !password) {
-            setError('Please fill in all fields');
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please fill in all fields!',
+            });
             return;
         }
 
         if (password.length < 6) {
-            setError('Password must be at least 6 characters long');
+            Swal.fire({
+                icon: 'error',
+                title: 'Weak Password',
+                text: 'Password must be at least 6 characters long.',
+            });
             return;
         }
 
         try {
             setLoading(true);
-            setError('');
-            
+
             const response = await fetch('http://localhost:5000/api/auth/register', {
                 method: 'POST',
                 headers: {
@@ -51,15 +58,30 @@ const RegisterCard = () => {
                 throw new Error(data.message || 'Failed to register account');
             }
 
-            // Save user data and token to localStorage
+            // Save user data and token
             localStorage.setItem('userInfo', JSON.stringify(data));
             localStorage.setItem('token', data.token);
-            
-            // Redirect to home page or dashboard
-            navigate('/');
-            
+
+            // Show success message
+            Swal.fire({
+                icon: 'success',
+                title: 'Account Created!',
+                text: 'Your account has been successfully created.',
+                timer: 2000,
+                showConfirmButton: false
+            });
+
+            // Redirect to home
+            setTimeout(() => {
+                navigate('/');
+            }, 2000);
+
         } catch (error) {
-            setError(error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration Failed',
+                text: error.message,
+            });
         } finally {
             setLoading(false);
         }
@@ -71,7 +93,6 @@ const RegisterCard = () => {
                 <div className="register__header">
                     <h1>Create Account</h1>
                 </div>
-                {error && <div className="error__message">{error}</div>}
                 <form onSubmit={handleRegister}>
                     <div className="register__inputs">
                         <div className="fname__input__container reg__input__container">
@@ -101,7 +122,7 @@ const RegisterCard = () => {
                             <input
                                 type="email"
                                 className="email__input register__input"
-                                placeholder='example@gmail.com'
+                                placeholder="example@gmail.com"
                                 name="email"
                                 value={email}
                                 onChange={handleChange}
@@ -132,7 +153,7 @@ const RegisterCard = () => {
                     </div>
                 </form>
                 <div className="register__other__actions">
-                    <div className="register__login__account">Already have account? <Link to="/account/login">Login</Link></div>
+                    <div className="register__login__account">Already have an account? <Link to="/account/login">Login</Link></div>
                 </div>
             </div>
         </div>

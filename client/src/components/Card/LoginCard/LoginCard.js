@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import './LoginCard.css';
 
 const LoginCard = () => {
@@ -12,7 +13,6 @@ const LoginCard = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         
-        // Basic validation
         if (!email || !password) {
             setError('Please fill in all fields');
             return;
@@ -24,9 +24,7 @@ const LoginCard = () => {
             
             const response = await fetch('http://localhost:5000/api/auth/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
             });
 
@@ -36,15 +34,30 @@ const LoginCard = () => {
                 throw new Error(data.message || 'Failed to login');
             }
 
-            // Save user data and token to localStorage
             localStorage.setItem('userInfo', JSON.stringify(data));
             localStorage.setItem('token', data.token);
-            
-            // Redirect to home page or dashboard
-            navigate('/');
-            
+
+            // Show a success alert with SweetAlert2
+            Swal.fire({
+                title: 'Success!',
+                text: 'Login successful',
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            });
+
+            setTimeout(() => {
+                navigate('/');
+            }, 2000); // Redirect after 2 seconds
+
         } catch (error) {
             setError(error.message);
+            Swal.fire({
+                title: 'Error!',
+                text: error.message,
+                icon: 'error',
+                confirmButtonColor: '#ff4d4d'
+            });
         } finally {
             setLoading(false);
         }
@@ -94,7 +107,9 @@ const LoginCard = () => {
                 </form>
                 <div className="login__other__actions">
                     <div className="login__forgot__password">Forgot password?</div>
-                    <div className="login__new__account">Don't have account? <Link to="/account/register">Create account</Link></div>
+                    <div className="login__new__account">
+                        Don't have an account? <Link to="/account/register">Create account</Link>
+                    </div>
                 </div>
             </div>
         </div>

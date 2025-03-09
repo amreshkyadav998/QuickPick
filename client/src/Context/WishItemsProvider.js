@@ -36,3 +36,122 @@ const WishItemsProvider = (props) => {
 }
  
 export default WishItemsProvider;
+
+
+// import React, { useState, useEffect, useContext } from 'react';
+// import { WishItemsContext } from './WishItemsContext';
+// import { AuthContext } from './AuthContext';
+// import { wishlistAPI } from '../utils/apiUtils';
+
+// export const WishItemsProvider = ({ children }) => {
+//     const [wishItems, setWishItems] = useState([]);
+//     const [loading, setLoading] = useState(false);
+//     const [error, setError] = useState(null);
+//     const { isAuthenticated } = useContext(AuthContext);
+
+//     useEffect(() => {
+//         if (isAuthenticated) {
+//             fetchWishlistItems();
+//         } else {
+//             const localWishlist = localStorage.getItem('wishlist');
+//             if (localWishlist) {
+//                 setWishItems(JSON.parse(localWishlist));
+//             }
+//         }
+//     }, [isAuthenticated]);
+
+//     useEffect(() => {
+//         if (!isAuthenticated && wishItems.length > 0) {
+//             localStorage.setItem('wishlist', JSON.stringify(wishItems));
+//         }
+//     }, [wishItems, isAuthenticated]);
+
+//     const fetchWishlistItems = async () => {
+//         try {
+//             setLoading(true);
+//             const data = await wishlistAPI.getWishlist();
+//             setWishItems(data);
+//             setError(null);
+//         } catch (err) {
+//             setError(err.message);
+//             console.error('Error fetching wishlist:', err);
+//         } finally {
+//             setLoading(false);
+//         }
+//     };
+
+//     const addToWishlist = async (item) => {
+//         if (isAuthenticated) {
+//             try {
+//                 setLoading(true);
+//                 await wishlistAPI.addToWishlist(item._id);
+//                 fetchWishlistItems();
+//             } catch (err) {
+//                 setError(err.message);
+//                 console.error('Error adding to wishlist:', err);
+//             } finally {
+//                 setLoading(false);
+//             }
+//         } else if (!wishItems.some(wishItem => wishItem._id === item._id)) {
+//             setWishItems([...wishItems, item]);
+//         }
+//     };
+
+//     const removeFromWishlist = async (itemId) => {
+//         if (isAuthenticated) {
+//             try {
+//                 setLoading(true);
+//                 await wishlistAPI.removeFromWishlist(itemId);
+//                 fetchWishlistItems();
+//             } catch (err) {
+//                 setError(err.message);
+//                 console.error('Error removing from wishlist:', err);
+//             } finally {
+//                 setLoading(false);
+//             }
+//         } else {
+//             setWishItems(wishItems.filter(item => item._id !== itemId));
+//         }
+//     };
+
+//     const clearWishlist = () => {
+//         setWishItems([]);
+//         if (!isAuthenticated) {
+//             localStorage.removeItem('wishlist');
+//         }
+//     };
+
+//     const syncWishlistWithServer = async () => {
+//         if (isAuthenticated && wishItems.length > 0) {
+//             try {
+//                 setLoading(true);
+//                 for (const item of wishItems) {
+//                     await wishlistAPI.addToWishlist(item._id);
+//                 }
+//                 localStorage.removeItem('wishlist');
+//                 fetchWishlistItems();
+//             } catch (err) {
+//                 setError(err.message);
+//                 console.error('Error syncing wishlist with server:', err);
+//             } finally {
+//                 setLoading(false);
+//             }
+//         }
+//     };
+
+//     return (
+//         <WishItemsContext.Provider
+//             value={{
+//                 wishItems,
+//                 addToWishlist,
+//                 removeFromWishlist,
+//                 clearWishlist,
+//                 syncWishlistWithServer,
+//                 loading,
+//                 error,
+//             }}
+//         >
+//             {children}
+//         </WishItemsContext.Provider>
+//     );
+// };
