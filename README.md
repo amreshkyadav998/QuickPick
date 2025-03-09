@@ -1,55 +1,66 @@
 # MERN Ecommerce Application
-
-<code>Currently under construction for additional features</code>
+🚧 Currently under development with additional features
 
 # Description
+A full-stack eCommerce application built using the MERN stack. This project includes:
 
-Full-stack ecommerce application built with MERN stack. This project has two features:
-
-1. Buyers register and browse the marketplace while interacting with products across different categories.
-2. Admins control and manage the marketplace items and customer acounts.
-
+Buyers – Users can register, browse products across various categories, and make purchases.
+Admins – Manage products, customer accounts, and overall marketplace operations.
+# Tech Stack
+Frontend: React.js, Material UI
+Backend: Node.js, Express.js
+Database: MongoDB (Mongoose ORM)
 # Getting Started
+Prerequisites
+Ensure you have the following installed:
 
-## Dependencies
+Node.js
+MongoDB
+Installation
+Clone the repository:
 
-- Nodejs - The runtime environment of the application
-- Reactjs - Component based UI library
-- MongoDB - NoSQL database
-- Expressjs - Framework to handle routes and requests
-- Mongoose - MongoDB object modeling tool to model the database schema
+sh
+Copy
+Edit
+git clone https://github.com/your-repo-name.git  
+cd your-repo-name  
+Setup Database:
 
-## Installation
+Create a MongoDB database with a collection named Items.
+Insert sample data from server/ItemsCollection.js.
+# Configure Environment Variables:
 
-After you cloned the repository do not start the application. To run the application fully you need to create a database and collection and provide your own database URI.
+In the server/ directory, create a .env file with the following:
+sh
+Copy
+Edit
+NODE_ENV=development  
+PORT=5000  
+MONGO_URI=mongodb+srv://<your-mongodb-uri>  
+Running the Application
+Run both frontend and backend concurrently in separate terminals:
 
-### Setup
+# Start the backend:
 
-- Go to MongoDB website and create a database and a collection named 'Items' and insert the data in the <code>server/ItemsCollection.js</code> file as a document.
-- Create a .env file in the server folder and type the following
+sh
+Copy
+Edit
+cd server  
+npm run dev  
+# Start the frontend:
 
-```
-    NODE_ENV = development
-    PORT = 5000
-    MONGO_URI = mongodb+srv://<your uri from mongodb website>
-```
+sh
+Copy
+Edit
+cd client  
+npm start  
+💡 Tip: Use a split terminal view to monitor both processes simultaneously.
 
-### Running
-
-After this you can run the project locally:
-
-- To run the front end
-  - <code>cd client</code>
-  - <code>npm start</code>
-- To run the back end
-  - <code>cd server</code>
-  - <code>npm run dev</code>
-    TIP: Run both in split terminal so that you can see both ends running
-
-# Languages and tools
-
-- [Node](https://nodejs.org)
-- [React](https://reactjs.org/)
-- [Expressjs](https://expressjs.com)
-- [Mongoose](https://mongoosejs.com)
-- [Material UI](https://mui.com/)
+# tools & Technologies
+Node.js – Backend runtime environment
+Express.js – API framework
+MongoDB – NoSQL database
+Mongoose – MongoDB object modeling
+React.js – Frontend UI library
+Material UI – UI components for a responsive design
+This version is more structured, concise, and professional. Let me know if you need further refinements! 🚀
