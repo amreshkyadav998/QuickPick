@@ -39,7 +39,7 @@ const Cart = () => {
     const handleCheckout = async () => {
         if (cartItems.totalAmount > 0) {
             try {
-                const response = await fetch("http://localhost:5000/api/payment/initialize", {
+                const response = await fetch("https://quickpick-backend.onrender.com/api/payment/initialize", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
