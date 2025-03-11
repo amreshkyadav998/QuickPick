@@ -22,7 +22,8 @@ Clone the repository:
 sh
 Copy
 Edit
-git clone https://github.com/your-repo-name.git  
+git clone 
+https://github.com/amreshkyadav998/QuickPick  
 cd your-repo-name  
 Setup Database:
 
